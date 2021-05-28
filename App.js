@@ -29,11 +29,6 @@ class App extends Component {
 
   constructor(props){
     super(props);
-
-    this.state = {
-      loaded : false,
-      loggedIn : false
-    }
   }
   
   render(){  
@@ -43,7 +38,9 @@ class App extends Component {
           <Stack.Screen
             name="mainPage"
             component={mainPage}
-            options={{ headerShown: false }}
+            options={{ 
+              headerShown: false 
+            }}
           />
           <Stack.Screen
             name="Sign Up"

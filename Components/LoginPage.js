@@ -1,102 +1,124 @@
 import React , { Component } from 'react';
-import { TextInput, View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
+import { TextInput, View, StyleSheet, Text, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import AppButton from './CustomButton';
 import firebase from 'firebase';
 
 class LoginPage extends Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props) {
-        super(props)
+    this.state = {
+      email: "",
+      password: "",
+    };
+  }
 
-        this.state = {
-            email : '',
-            password : '',
-        }
-    }
-
-    onLogin = () => {
-        const{ email , password } = this.state;
-        console.log(email , password)
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((result) => {
-          Alert.alert("Success" , "You have been logged In succesfully" , [{ 
-            text: "Ok"
-          }])
-        })
-        .catch((error) => {
-          errMessage = error;
-          Alert.alert(" Error " , {errMessage} , [{ 
+  onLogin = () => {
+    const { email, password } = this.state;
+    console.log(email, password);
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        Alert.alert("Success", "You have been logged In succesfully", [
+          {
+            text: "Ok",
+          },
+        ]);
+      })
+      .catch((error) => {
+        errMessage = error;
+        Alert.alert(" Error ", { errMessage }, [
+          {
             text: " Ok ",
             onPress: () => {
               this.setState({
                 email: "",
-                password: "" 
-              })
-            }
-           }] )
-        })
-    }
+                password: "",
+              });
+            },
+          },
+        ]);
+      });
+  };
 
-    render() {
-        return (
-          <View style={styles.mainContainerLoginPage}>
+  componentWillMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackClick);
+  }
 
-            <View style={styles.insideContainer}>
-              <View style={styles.secondaryContainer}>
-                <View style={styles.textContainer}>
-                  <Text style={styles.textStyles}> Email </Text>
-                </View>
-                <View style={styles.textInputContainer}>
-                  <TextInput
-                    textContentType = "emailAddress"
-                    onChangeText={(email) => this.setState({ email })}
-                    style={styles.TextInputFontStyles}
-                    value={this.state.email} 
-                  />
-                </View>
-              </View>
+  componenetWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackClick);
+  }
 
-              <View style={styles.secondaryContainer}>
-                <View style={styles.textContainer1}>
-                  <Text style={styles.textStyles}>Password</Text>
-                  <TouchableOpacity
-                    onPress = {() => {this.props.navigation.navigate("Forgot Password")} }>
-                    <Text style={styles.textStyles1}>Forgot Password?</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.textInputContainer}>
-                  <TextInput
-                    textContentType = "password"
-                    onChangeText={(password) => this.setState({ password })}
-                    style={styles.TextInputFontStyles}
-                    secureTextEntry={true}
-                    value={this.state.password} 
-                  />
-                </View>
-              </View>
+  onBackClick = () => {
+    this.props.navigation.navigate("mainPage");
+    return true;
+  };
 
-              <View style={styles.AppButtonContainerStyles}>
-                <AppButton
-                  onPress={() => this.onLogin()}
-                  title="Login"
-                  backgroundColor="#00D100"
-                />
-              </View>
-
-              <View style={styles.lastContainer}>
-                <Text style={styles.textStylesForLastContainer}>New here?</Text>
-                <TouchableOpacity
-                  onPress={() => {this.props.navigation.navigate("Sign Up")} }
-                >
-                  <Text style={styles.textStylesForLastContainer1}>
-                    Create an account
-                  </Text>
-                </TouchableOpacity>
-              </View>
+  render() {
+    return (
+      <View style={styles.mainContainerLoginPage}>
+        <View style={styles.insideContainer}>
+          <View style={styles.secondaryContainer}>
+            <View style={styles.textContainer}>
+              <Text style={styles.textStyles}> Email </Text>
+            </View>
+            <View style={styles.textInputContainer}>
+              <TextInput
+                textContentType="emailAddress"
+                onChangeText={(email) => this.setState({ email })}
+                style={styles.TextInputFontStyles}
+                value={this.state.email}
+              />
             </View>
           </View>
-        );
-    }
+
+          <View style={styles.secondaryContainer}>
+            <View style={styles.textContainer1}>
+              <Text style={styles.textStyles}>Password</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate("Forgot Password");
+                }}
+              >
+                <Text style={styles.textStyles1}>Forgot Password?</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.textInputContainer}>
+              <TextInput
+                textContentType="password"
+                onChangeText={(password) => this.setState({ password })}
+                style={styles.TextInputFontStyles}
+                secureTextEntry={true}
+                value={this.state.password}
+              />
+            </View>
+          </View>
+
+          <View style={styles.AppButtonContainerStyles}>
+            <AppButton
+              onPress={() => this.onLogin()}
+              title="Login"
+              backgroundColor="#00D100"
+            />
+          </View>
+
+          <View style={styles.lastContainer}>
+            <Text style={styles.textStylesForLastContainer}>New here?</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate("Sign Up");
+              }}
+            >
+              <Text style={styles.textStylesForLastContainer1}>
+                Create an account
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

@@ -33,9 +33,9 @@ class SignUpPage extends Component {
         }
         else{
             try{
+                this.setState({ isLoadingScreen: true });
                 firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then((result) => {  
-                  this.setState({ isLoadingScreen: true });
                   this.props.navigation.navigate("Log In")
                 })
                 .catch(error => {
@@ -44,14 +44,13 @@ class SignUpPage extends Component {
 
                         case 'auth/email-already-in-use':
                             Alert.alert("Error" , "Email is already in use" , [
-                                {
+                                { 
                                     text: "Ok",
                                     onPress: () => {
                                         this.setState({ email: "" , password: "" , confirmPassword: "" });    
                                     } 
                                 }
                             ])
-
                             break;
                         case 'auth/invalid-email':
                             Alert.alert("Error" , "Email is incorrect" , [
@@ -62,7 +61,6 @@ class SignUpPage extends Component {
                                     } 
                                 }
                             ])
-                            
                             break;
                         case 'auth/invalid-password':
                             Alert.alert("Error" , "Password must be a string of atleast 6 characters" , [
@@ -73,17 +71,17 @@ class SignUpPage extends Component {
                                     } 
                                 }
                             ])
-                           
-                            break;    
+                            break;
                     }
-
+                  this.setState({ isLoadingScreen: false });
                 })
+                
 
             }
 
             catch(err){
-                this.setState({ isLoadingScreen: false });
                 Alert.alert(err);
+                this.setState({ isLoadingScreen: false });
             }
         }
     }
