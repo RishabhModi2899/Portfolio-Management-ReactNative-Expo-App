@@ -12,7 +12,7 @@ class SignUpPage extends Component {
         this.state = { isLoadingScreen: false, password: "", confirmPassword: "", email: "" };
     }
     
-    onSignUp = async() => {
+    onSignUp = () => {
         console.log('Pressed')
         const { email , password , confirmPassword } = this.state;
         if (confirmPassword !== password) 
@@ -35,52 +35,69 @@ class SignUpPage extends Component {
             try{
                 this.setState({ isLoadingScreen: true });
                 firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((result) => {  
-                  this.props.navigation.navigate("Log In")
-                })
-                .catch(error => {
+                  .then(() => {
                     
-                    switch(error.code){
+                    Alert.alert("Success" , "Your account has been created successfully" , [{
+                      text: "Ok",
+                      onPress: () => {
+                        Alert.alert(
+                          "Email Verification",
+                          "An email has been sent to your email address",
+                          [
+                            {
+                              text: "Ok",
+                              onPress: () => {
+                                this.props.navigation.navigate("Log In");
+                              },
+                            },
+                          ]
+                        );
+                        var user = firebase.auth().currentUser
+                        user.sendEmailVerification()
+                      }
+                    }])
+                    
+                  })
+                  .catch(error => {
+                      
+                      switch(error.code){
 
-                        case 'auth/email-already-in-use':
-                            Alert.alert("Error" , "Email is already in use" , [
-                                { 
-                                    text: "Ok",
-                                    onPress: () => {
-                                        this.setState({ email: "" , password: "" , confirmPassword: "" });    
-                                    } 
-                                }
-                            ])
-                            break;
-                        case 'auth/invalid-email':
-                            Alert.alert("Error" , "Email is incorrect" , [
-                                {
-                                    text: "Ok",
-                                    onPress: () => {
-                                        this.setState({ email: "" });
-                                    } 
-                                }
-                            ])
-                            break;
-                        case 'auth/invalid-password':
-                            Alert.alert("Error" , "Password must be a string of atleast 6 characters" , [
-                                {
-                                    text: "Ok",
-                                    onPress: () => {
-                                        this.setState({ email: "" });
-                                    } 
-                                }
-                            ])
-                            break;
-                    }
-                  this.setState({ isLoadingScreen: false });
-                })
-                
-
+                          case 'auth/email-already-in-use':
+                              Alert.alert("Error" , "Email is already in use" , [
+                                  { 
+                                      text: "Ok",
+                                      onPress: () => {
+                                          this.setState({ email: "" , password: "" , confirmPassword: "" });    
+                                      } 
+                                  }
+                              ])
+                              break;
+                          case 'auth/invalid-email':
+                              Alert.alert("Error" , "Email is incorrect" , [
+                                  {
+                                      text: "Ok",
+                                      onPress: () => {
+                                          this.setState({ email: "" });
+                                      } 
+                                  }
+                              ])
+                              break;
+                          case 'auth/invalid-password':
+                              Alert.alert("Error" , "Password must be a string of atleast 6 characters" , [
+                                  {
+                                      text: "Ok",
+                                      onPress: () => {
+                                          this.setState({ email: "" });
+                                      } 
+                                  }
+                              ])
+                              break;
+                      }
+                    this.setState({ isLoadingScreen: false });
+                  })
             }
-
             catch(err){
-                Alert.alert(err);
+                alert("Error :" , err.message);
                 this.setState({ isLoadingScreen: false });
             }
         }

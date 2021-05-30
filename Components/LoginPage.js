@@ -14,39 +14,49 @@ class LoginPage extends Component {
   }
 
   onLogin = () => {
+
+    console.log("Pressed Login Button");
     const { email, password } = this.state;
-    console.log(email, password);
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        Alert.alert("Success", "You have been logged In succesfully", [
-          {
+    
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        
+        var user = firebase.auth().currentUser;
+        
+        if (user.emailVerified != false){
+          console.log("Redirect to User profile")
+        }else{
+          Alert.alert("Email Verification" , "An e-mail has been sent to your e-mail Address" , [{
             text: "Ok",
-          },
-        ]);
+            onPress: () => {
+              user.sendEmailVerification();
+              this.setState({ email: "" , password: "" })
+            }
+          }])
+         
+        }
+
       })
       .catch((error) => {
-        errMessage = error;
-        Alert.alert(" Error ", { errMessage }, [
+        Alert.alert(" Error ", error.message , [
           {
             text: " Ok ",
             onPress: () => {
               this.setState({
                 email: "",
-                password: "",
+                password: ""
               });
-            },
-          },
-        ]);
-      });
-  };
-
-  componentWillMount() {
+            }
+          }
+        ])
+      })
+  } 
+ 
+  UNSAFE_componentWillMount() {
     BackHandler.addEventListener("hardwareBackPress", this.onBackClick);
   }
 
-  componenetWillUnmount() {
+  UNSAFE_componenetWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackClick);
   }
 

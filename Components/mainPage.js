@@ -10,7 +10,7 @@ const mainPage = ({ navigation }) => {
             {/* Initial page for the app */}
             <ImageBackground resizeMode = "cover" source = { BackgroundImange } style={styles.imageStyle}>
                 <Text style={styles.welcomeStyle}> 
-                    WELCOME 
+                    WELCOME
                 </Text>
                 <View style={styles.mainButtonsContainer}>
                     <View style={{marginTop : "1.5%" , marginBottom : "1.5%"}} >
