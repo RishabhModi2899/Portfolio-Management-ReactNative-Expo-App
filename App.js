@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import mainPage from './Components/AuthenticationPages/mainPage';
+import mainPage from "./Components/mainPage";
 import NewSignUpPage from './Components/AuthenticationPages/newSignUpPage';
 import LoginPage from './Components/AuthenticationPages/LoginPage';
 import ForgotPass from './Components/AuthenticationPages/ForgotPass';

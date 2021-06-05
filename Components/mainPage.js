@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import BackgroundImange from "../assets/best-img-1.jpg";
-import AppButton from '../CustomComponents/CustomButton';
+import AppButton from './CustomComponents/CustomButton';
 
 const mainPage = ({ navigation }) => {
     

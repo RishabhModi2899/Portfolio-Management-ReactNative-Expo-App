@@ -163,12 +163,12 @@ class NewSignUpPage extends Component {
     render() {
 
         const mainGridStyles = {
-            backgroundColor: "white",
+            backgroundColor: "#2a2a2a",
             width: "100%",
             height: "100%"
         }
         const paperStyle = {
-            backgroundColor: "#DCDCDC",
+            backgroundColor: "#F4B41A",
             marginLeft: "15%",
             marginRight: "15%",
             marginBottom: "0%",
@@ -182,7 +182,8 @@ class NewSignUpPage extends Component {
             paddingLeft: "35%",
             paddingRight: "35%",
             paddingTop: "2.5%",
-            paddingBottom: "2.5%"
+            paddingBottom: "2.5%",
+            color: 'white'
         }
         const buttonContainerStyle = {
             paddingLeft: "35%",
@@ -201,6 +202,13 @@ class NewSignUpPage extends Component {
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
+        }
+        const headerStylesThemeBlue = {
+            backgroundColor: "#143D59",
+            marginLeft: "3.5%",
+            marginRight: "3.5%",
+            marginBottom: "3.5%",
+            marginTop: "0%"
         }
 
         const {isLoading} = this.state;
@@ -230,7 +238,7 @@ class NewSignUpPage extends Component {
                                     ]}
                             />
 
-                            <Grid align="center">
+                            <Grid style={headerStylesThemeBlue} align="center">
                             
                                 <h2 style={headerStyle}>
                                     Sign Up
@@ -241,7 +249,7 @@ class NewSignUpPage extends Component {
                             <form autoComplete="off">
                                 <div style={textFieldContainerStyles}>
                                     <TextField 
-                                        required ={true}
+                                        required
                                         fullWidth
                                         variant="outlined"
                                         label="First Name"
@@ -300,7 +308,7 @@ class NewSignUpPage extends Component {
 
                             <div style={buttonContainerStyle}>
                             
-                                <AppButton title="Create Account" backgroundColor="#00D100" onPress={this.onSignUp}/>
+                                <AppButton title="Create Account" backgroundColor="#143D59" onPress={this.onSignUp}/>
                                 
                             </div>
 
