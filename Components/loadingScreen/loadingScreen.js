@@ -7,32 +7,33 @@ class LoadingScreen extends Component {
     }
     
     render() {
+        
+        const mainContainer = {
+            display:"flex",
+            height:"100%",
+            width:"100%",
+            flexDirection:"column",
+            backgroundColor:"#2a2a2a",
+            alignItems: "center",
+            justifyContent: "center"
+        }
+        const loadingTextStyles = {
+            margin:'1%',
+            fontSize:20,
+            color:'white',
+            fontWeight:"bold",
+            textAlign:"center"
+        }
+
         return (
-            <View style={ StyleSheet.mainContainer}>
+            <div style={mainContainer}>
                 <ActivityIndicator size="large" color="green"/>
-                <Text style={styles.loadingTextStyles}>
-                    loading
-                </Text>
-            </View>
-        )
+                <h4 style={loadingTextStyles}>
+                    Loading
+                </h4>
+            </div>
+        );
     }
 }
-
-const styles = StyleSheet.create({
-    mainContainer : {
-        flex:1,
-        backgroundColor:"black",
-        justifyContent:"center",
-        alignItems:"center",
-        alignContent:"center"
-    },
-    loadingTextStyles : {
-        margin:'1%',
-        fontSize:20,
-        color:'white',
-        fontWeight:"bold",
-        textAlign:"center"
-    }
-})
 
 export default LoadingScreen;

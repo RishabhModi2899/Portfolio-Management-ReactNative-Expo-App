@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import mainPage from './Components/mainPage';
-import SignUpPage from './Components/SignUpPage';
-import LoginPage from './Components/LoginPage';
-import ForgotPass from './Components/ForgotPass';
+import mainPage from './Components/AuthenticationPages/mainPage';
+import NewSignUpPage from './Components/AuthenticationPages/newSignUpPage';
+import LoginPage from './Components/AuthenticationPages/LoginPage';
+import ForgotPass from './Components/AuthenticationPages/ForgotPass';
+import Portfolio from './Components/AuthenticationPages/Portfolio'
 
 import firebase from 'firebase';
 
@@ -44,7 +45,7 @@ class App extends Component {
           />
           <Stack.Screen
             name="Sign Up"
-            component={SignUpPage}
+            component={NewSignUpPage}
             options={{
               headerShown: false,
             }}
@@ -63,6 +64,12 @@ class App extends Component {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+          name = "Portfolio"
+          component={Portfolio}
+          options={{
+            headerShown: false,
+          }}/>
         </Stack.Navigator>
       </NavigationContainer>
     );  

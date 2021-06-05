@@ -1,7 +1,8 @@
 import React , { Component } from 'react';
 import { TextInput, View, StyleSheet, Text, TouchableOpacity, Alert, BackHandler } from 'react-native';
-import AppButton from './CustomButton';
+import AppButton from '../CustomComponents/CustomButton';
 import firebase from 'firebase';
+import LoadingScreen from "../loadingScreen/loadingScreen";
 
 class LoginPage extends Component {
   constructor(props) {
@@ -10,34 +11,43 @@ class LoginPage extends Component {
     this.state = {
       email: "",
       password: "",
+      isLoading: false
     };
   }
 
   onLogin = () => {
 
     console.log("Pressed Login Button");
+    this.setState({ isLoading: true })
     const { email, password } = this.state;
     
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
-        
+
         var user = firebase.auth().currentUser;
         
         if (user.emailVerified != false){
-          console.log("Redirect to User profile")
+          
+          this.setState({ isLoading: false })
+          this.props.navigation.navigate("Portfolio")
+          
         }else{
+
+          this.setState({ isLoading: false })
           Alert.alert("Email Verification" , "An e-mail has been sent to your e-mail Address" , [{
             text: "Ok",
             onPress: () => {
               user.sendEmailVerification();
               this.setState({ email: "" , password: "" })
             }
+
           }])
-         
+        
         }
 
       })
       .catch((error) => {
+        this.setState({ isLoading: false })
         Alert.alert(" Error ", error.message , [
           {
             text: " Ok ",
@@ -66,9 +76,15 @@ class LoginPage extends Component {
   };
 
   render() {
+
+    const { isLoading } = this.state;
+
     return (
       <View style={styles.mainContainerLoginPage}>
-        <View style={styles.insideContainer}>
+        { isLoading ? 
+        (<LoadingScreen />) : 
+        (
+          <View style={styles.insideContainer}>
           <View style={styles.secondaryContainer}>
             <View style={styles.textContainer}>
               <Text style={styles.textStyles}> Email </Text>
@@ -126,6 +142,7 @@ class LoginPage extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        )}  
       </View>
     );
   }

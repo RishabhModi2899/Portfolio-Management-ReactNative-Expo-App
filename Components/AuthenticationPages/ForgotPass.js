@@ -1,6 +1,6 @@
 import React , { Component } from "react";
 import { StyleSheet, View, TextInput, Text } from "react-native";
-import AppButton from "./CustomButton";
+import AppButton from "../CustomComponents/CustomButton";
 
 class ForgetPassword extends Component {
     
