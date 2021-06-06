@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TouchableOpacity } from "react-native"
 
-import { TextField, Grid, Paper, Snackbar, IconButton } from "@material-ui/core";
+import { TextField, Grid, div, Snackbar, IconButton } from "@material-ui/core";
 
 import AppButton from '../CustomComponents/CustomButton';
 import LoadingScreen from '../loadingScreen/loadingScreen';
@@ -23,7 +23,13 @@ class NewSignUpPage extends Component {
             confirmPassword: "",
             
             snackbarOpen: false,
-            SnackbarMessage: "" 
+            SnackbarMessage: "" ,
+
+            fnEmptyChk: false,
+            lnEmptyChk: false,
+            emailEmptyChk: false,
+            passwordEmptyChk: false,
+            confirmPasswordEmptyChk: false
         };
 
         this.onSignUp = this.onSignUp.bind(this);
@@ -60,6 +66,57 @@ class NewSignUpPage extends Component {
         })        
     }
 
+    // To check for empty fields in the form
+    fnCheck = () => {
+        
+        if( this.state.firstName.length === null){
+            
+            this.setState({ fnEmptyChk : true })
+        
+        }
+
+    }
+
+    lnCheck = () => {
+
+        if( this.state.lastName.length === null ){
+        
+            this.setState({ lnEmptyChk : true })
+
+        }
+
+    }
+
+    emailCheck = () => {
+
+        if( this.state.email.length === null ){
+            
+            this.setState({ emailEmptyChk : true })
+
+        }
+
+    }
+
+    passwordCheck = () => {
+
+        if( this.state.password.length === null){
+            
+            this.setState({ passwordEmptyChk : true })
+
+        }
+    
+    }
+
+    confirmPasswordCheck = () => {
+
+        if( this.state.confirmPassword.length === null){
+            
+            this.setState({ confirmPasswordEmptyChk : true })
+        
+        }
+
+    }
+
     // Function to handle On Create Account Button Press
     onSignUp(event) {
         console.log('Pressed')
@@ -68,6 +125,16 @@ class NewSignUpPage extends Component {
         
         const { email , password , confirmPassword } = this.state;
         
+        this.fnCheck();
+
+        this.lnCheck();
+
+        this.emailCheck();
+
+        this.passwordCheck();
+
+        this.confirmPasswordCheck();
+
         if (confirmPassword !== password) 
         {
 
@@ -162,175 +229,211 @@ class NewSignUpPage extends Component {
 
     render() {
 
-        const mainGridStyles = {
+        const MainContainer = {
+            
+            display: "flex",
+            flex: 1,
             backgroundColor: "#2a2a2a",
-            width: "100%",
-            height: "100%"
+            margin: "0%",
+            padding: "0%",
+            justifyContent: "space-between"
+
         }
-        const paperStyle = {
+        const SecContainer = {
+
+            flex: 1,
             backgroundColor: "#F4B41A",
             marginLeft: "15%",
             marginRight: "15%",
-            marginBottom: "0%",
             marginTop: "0%",
-            padding: "2%"
+            marginBottom: "0%"
+
+        }
+        const headerContainer = {
+
+            backgroundColor: "#143D59",
+            border: '3px solid black'
+        }
+        const headerFontStyles = {
+
+            textAlign: "center",
+            padding: "1%",
+            color: "white"
+
+        }
+        const formContainer = {
+            margin: "2%"
         }
         const textFieldContainerStyles = {
-            margin: "3.5%"
+            
+            margin: "4%"
+        
         }
-        const headerStyle = { 
-            paddingLeft: "35%",
-            paddingRight: "35%",
-            paddingTop: "2.5%",
-            paddingBottom: "2.5%",
-            color: 'white'
+        const buttonContainer = {
+
+            marginTop: "5%",
+            marginBottom: "5%",
+            marginLeft: "30%",
+            marginRight: "30%"
+
         }
-        const buttonContainerStyle = {
-            paddingLeft: "35%",
-            paddingRight: "35%",
-            paddingTop: "2.5%",
-            paddingBottom: "2.5%"
-        }
-        const linkStyles = {
-            color: "blue",
-            float: "right",
-        }
-        const normalText = {
-            float: "left",
-        }
-        const Container = {
+        const linkContainer = {
+
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center"
+
         }
-        const headerStylesThemeBlue = {
-            backgroundColor: "#143D59",
-            marginLeft: "3.5%",
-            marginRight: "3.5%",
-            marginBottom: "3.5%",
-            marginTop: "0%"
+        const linkTextStyles = {
+
+            color: "blue"
+
         }
 
         const {isLoading} = this.state;
 
             return (
-                <Grid style={mainGridStyles}>
+                <div style={MainContainer}>
 
                     { isLoading ? (<LoadingScreen />) : (  
+                        
+                        <div style={SecContainer}>   
 
-                        <div>
-                            <Paper elevation={20} style={paperStyle}>
+                            <div style={headerContainer}>
 
-                            <Snackbar 
-                                anchorOrigin = {{vertical:"center" , horizontal:"center"}}
-                                open = {this.state.snackbarOpen}
-                                autoHideDuration = {false}
-                                onClose = {this.snackbarClose}
-                                message = {this.state.SnackbarMessage}
-                                action = {[
-                                    <IconButton 
-                                        key = "close"
-                                        aria-label = "Close"
-                                        color = "inherit"
-                                        onClick = { this.snackbarClose }>
-                                            x
-                                    </IconButton>
-                                    ]}
-                            />
-
-                            <Grid style={headerStylesThemeBlue} align="center">
-                            
-                                <h2 style={headerStyle}>
+                                <h1 style={headerFontStyles}>
+                                    
                                     Sign Up
-                                </h2>
-                            
-                            </Grid>
-
-                            <form autoComplete="off">
-                                <div style={textFieldContainerStyles}>
-                                    <TextField 
-                                        required
-                                        fullWidth
-                                        variant="outlined"
-                                        label="First Name"
-                                        color="primary"
-                                        value={this.state.firstName}
-                                        onChange={this.handleFirstName}
-                                    />  
-                                </div>
-                                <div style={textFieldContainerStyles}>
-                                    <TextField
-                                        required 
-                                        fullWidth
-                                        variant="outlined"
-                                        label="Last Name"
-                                        color= "primary"
-                                        value={this.state.lastName}
-                                        onChange={this.handleLastName}
-                                    />
-                                </div>
-                                <div style={textFieldContainerStyles}>
-                                    <TextField
-                                        required 
-                                        fullWidth
-                                        variant="outlined"
-                                        label="Email Address"
-                                        color= "primary"
-                                        value={this.state.email}
-                                        onChange={this.handleEmail}
-                                    />
-                                </div>
-                                <div style={textFieldContainerStyles}>    
-                                    <TextField 
-                                        required 
-                                        fullWidth
-                                        variant="outlined"
-                                        type="password"
-                                        label="Password"
-                                        color= "primary"
-                                        value={this.state.password}
-                                        onChange={this.handlePassword}
-                                    />
-                                </div>
-                                <div style={textFieldContainerStyles}>    
-                                    <TextField 
-                                        required 
-                                        fullWidth
-                                        variant="outlined"
-                                        type="password"
-                                        label="Confirm Password"
-                                        color= "primary"
-                                        value={this.state.confirmPassword}
-                                        onChange={this.handleConfirmPassword}
-                                    />
-                                </div>
-                            </form>
-
-                            <div style={buttonContainerStyle}>
-                            
-                                <AppButton title="Create Account" backgroundColor="#143D59" onPress={this.onSignUp}/>
                                 
+                                </h1>
+
                             </div>
 
-                            <div style={Container}>
+                            <div style={formContainer}>
 
-                                <h3 style={normalText}>
-                                    Already have an Account?
-                                </h3>
-                                <TouchableOpacity onPress={() => { this.props.navigation.navigate("Log In"); } }>
-                                    <h3 style={linkStyles}>
-                                        Login
+                                <form autoComplete="off">
+
+                                    <div style={textFieldContainerStyles}>
+                                        <TextField 
+                                            error={this.state.fnEmptyChk}
+                                            required
+                                            fullWidth
+                                            variant="filled"
+                                            label="First Name"
+                                            color="primary"
+                                            value={this.state.firstName}
+                                            onChange={this.handleFirstName}
+                                        />  
+                                    </div>
+
+                                    <div style={textFieldContainerStyles}>
+                                        <TextField
+                                            error={this.state.lnEmptyChk}
+                                            required 
+                                            fullWidth
+                                            variant="filled"
+                                            label="Last Name"
+                                            color= "primary"
+                                            value={this.state.lastName}
+                                            onChange={this.handleLastName}
+                                        />
+                                    </div>
+
+                                    <div style={textFieldContainerStyles}>
+                                        <TextField
+                                            error={this.state.emailEmptyChk}
+                                            required 
+                                            fullWidth
+                                            variant="filled"
+                                            label="Email Address"
+                                            color= "primary"
+                                            value={this.state.email}
+                                            onChange={this.handleEmail}
+                                        />
+                                    </div>
+
+                                    <div style={textFieldContainerStyles}>    
+                                        <TextField 
+                                            error={this.state.passwordEmptyChk}
+                                            required 
+                                            fullWidth
+                                            variant="filled"
+                                            type="password"
+                                            label="Password"
+                                            color= "primary"
+                                            value={this.state.password}
+                                            onChange={this.handlePassword}
+                                        />
+                                    </div>
+
+                                    <div style={textFieldContainerStyles}>    
+                                        <TextField 
+                                            error={this.state.confirmPasswordEmptyChk}
+                                            required 
+                                            fullWidth
+                                            variant="filled"
+                                            type="password"
+                                            label="Confirm Password"
+                                            color= "primary"
+                                            value={this.state.confirmPassword}
+                                            onChange={this.handleConfirmPassword}
+                                        />
+                                    </div>
+
+                                </form>
+
+                                <div style={buttonContainer}>
+
+                                    <AppButton title="Create Account" backgroundColor="#143D59" onPress={this.onSignUp}/>
+
+                                </div>
+
+                                <div style={linkContainer}>
+
+                                    <h3>
+                                        
+                                        Already have an Account?
+                                    
                                     </h3>
-                                </TouchableOpacity>
+
+                                    <TouchableOpacity onPress={() => { this.props.navigation.navigate("Log In"); } }>
+                                        
+                                        <h3 style={linkTextStyles}>
+                                            
+                                            Login
+                                        
+                                        </h3>
+
+                                    </TouchableOpacity>
+
+                                </div>
+                            
+                            </div>
 
                         </div>
 
-                        </Paper>
-                    </div>
+                        //     <Snackbar 
+                        //         anchorOrigin = {{vertical:"top" , horizontal:"right"}}
+                        //         open = {this.state.snackbarOpen}
+                        //         autoHideDuration = {false}
+                        //         onClose = {this.snackbarClose}
+                        //         message = {this.state.SnackbarMessage}
+                        //         action = {[
+                        //             <IconButton 
+                        //                 key = "close"
+                        //                 aria-label = "Close"
+                        //                 color = "inherit"
+                        //                 onClick = { this.snackbarClose }>
+                        //                     x
+                        //             </IconButton>
+                        //             ]}
+                        //     />
                         
                         )
                     }
-                </Grid>
+                
+                </div>
          
             )
     }
