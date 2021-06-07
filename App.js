@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import mainPage from "./Components/mainPage";
 import NewSignUpPage from './Components/AuthenticationPages/newSignUpPage';
-import LoginPage from './Components/AuthenticationPages/LoginPage';
+import NewLoginPage from "./Components/AuthenticationPages/newLoginPage";
 import ForgotPass from './Components/AuthenticationPages/ForgotPass';
 import Portfolio from './Components/AuthenticationPages/Portfolio'
 
@@ -52,7 +52,7 @@ class App extends Component {
           />
           <Stack.Screen
             name="Log In"
-            component={LoginPage}
+            component={NewLoginPage}
             options={{
               headerShown: false,
             }}

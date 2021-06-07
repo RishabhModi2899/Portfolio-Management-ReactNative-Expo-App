@@ -15,6 +15,7 @@ class NewSignUpPage extends Component {
 
         this.state = { 
             isLoading: false,
+            redirect: false,
 
             firstName: "", 
             lastName: "", 
@@ -118,27 +119,36 @@ class NewSignUpPage extends Component {
     }
 
     // Function to handle On Create Account Button Press
-    onSignUp(event) {
-        console.log('Pressed')
+    onSignUp() {
 
-        event.preventDefault();
+        // event.preventDefault();
         
         const { email , password , confirmPassword } = this.state;
         
-        this.fnCheck();
+        // this.fnCheck();
 
-        this.lnCheck();
+        // this.lnCheck();
 
-        this.emailCheck();
+        // this.emailCheck();
 
-        this.passwordCheck();
+        // this.passwordCheck();
 
-        this.confirmPasswordCheck();
+        // this.confirmPasswordCheck();
 
         if (confirmPassword !== password) 
         {
 
-            this.setState({ snackbarOpen : true, SnackbarMessage : "The passwords entered are incorrect", password : "", confirmPassword : "" })
+            this.setState({ 
+
+                snackbarOpen : true, 
+                
+                SnackbarMessage : "The passwords entered are incorrect", 
+                
+                password : "", 
+                
+                confirmPassword : "" 
+            
+            })
             
         }
         else{
@@ -150,20 +160,28 @@ class NewSignUpPage extends Component {
                 
                     .then(() => {
                     
-                        this.setState({ snackbarOpen : true, SnackbarMessage : "Success!" , isLoading : false })
-                        
-                        if (this.state.snackbarOpen === false){
+                        this.setState({ 
                             
-                            this.props.navigation.navigate("Log In")
-                       
-                        }
+                            snackbarOpen : true, 
+                            
+                            SnackbarMessage : "Success! Your account has been created", 
+                            
+                            isLoading : false,
 
-                        var user = firebase.auth().currentUser;
+                            firstName : "",
 
-                        user.sendEmailVerification()
+                            lastName : "",
 
-                        this.setState({ snackbarOpen : true, SnackbarMessage : "Please Verify your E-mail" })
-                    
+                            email : "",
+
+                            password : "",
+
+                            confirmPassword : "",
+
+                            redirect : "true"
+
+                        })
+
                     })
                     .catch(error => {
                         
@@ -184,6 +202,7 @@ class NewSignUpPage extends Component {
                                 })
                                 
                                 break;
+
                             case 'auth/invalid-email':
 
                                 this.setState({ 
@@ -199,6 +218,7 @@ class NewSignUpPage extends Component {
                                 })
                                 
                                 break;
+
                             case 'auth/invalid-password':
 
                                 this.setState({ 
@@ -226,9 +246,23 @@ class NewSignUpPage extends Component {
 
     // Function to close snackBar
     snackbarClose = () => {
+
+        if( this.state.redirect ){
+            
+            var user = firebase.auth().currentUser
+
+            user.sendEmailVerification()
+
+            this.props.navigation.navigate("Log In")
+
+        }
+
         this.setState({
+
             snackbarOpen : false
+        
         })
+
     }
 
     render() {
@@ -314,14 +348,16 @@ class NewSignUpPage extends Component {
                                 onClose = { this.snackbarClose }
                                 message = {this.state.SnackbarMessage}
                                 action = {[
+
                                     <IconButton 
-                                        key = "close"
-                                        aria-label = "Close"
-                                        color = "inherit"
+                                        key = "close" 
+                                        color = "inherit" 
+                                        arial-label = "Close" 
                                         onClick = { this.snackbarClose }>
-                                            x
+                                        X
                                     </IconButton>
-                                    ]}
+                                    
+                                ]}
                             />
 
                             <div style={headerContainer}>
@@ -346,6 +382,7 @@ class NewSignUpPage extends Component {
                                             variant="filled"
                                             label="First Name"
                                             color="primary"
+                                            placeholder = "Enter your First Name"
                                             value={this.state.firstName}
                                             onChange={this.handleFirstName}
                                         />  
@@ -359,6 +396,7 @@ class NewSignUpPage extends Component {
                                             variant="filled"
                                             label="Last Name"
                                             color= "primary"
+                                            placeholder = "Enter your Last Name"
                                             value={this.state.lastName}
                                             onChange={this.handleLastName}
                                         />
@@ -372,6 +410,7 @@ class NewSignUpPage extends Component {
                                             variant="filled"
                                             label="Email Address"
                                             color= "primary"
+                                            placeholder = "Enter your Email"
                                             value={this.state.email}
                                             onChange={this.handleEmail}
                                         />
@@ -386,6 +425,7 @@ class NewSignUpPage extends Component {
                                             type="password"
                                             label="Password"
                                             color= "primary"
+                                            placeholder = "Enter your Password"
                                             value={this.state.password}
                                             onChange={this.handlePassword}
                                         />
@@ -399,6 +439,7 @@ class NewSignUpPage extends Component {
                                             variant="filled"
                                             type="password"
                                             label="Confirm Password"
+                                            placeholder = "Enter the password"
                                             color= "primary"
                                             value={this.state.confirmPassword}
                                             onChange={this.handleConfirmPassword}
@@ -409,7 +450,7 @@ class NewSignUpPage extends Component {
 
                                 <div style={buttonContainer}>
 
-                                    <AppButton title="Create Account" backgroundColor="#143D59" onPress={this.onSignUp}/>
+                                    <AppButton title="CREATE ACCOUNT" backgroundColor="#143D59" onPress={this.onSignUp}/>
 
                                 </div>
 
