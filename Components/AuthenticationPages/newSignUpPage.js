@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TouchableOpacity } from "react-native"
 
-import { TextField, Grid, div, Snackbar, IconButton } from "@material-ui/core";
+import { TextField, Snackbar, IconButton } from "@material-ui/core";
 
 import AppButton from '../CustomComponents/CustomButton';
 import LoadingScreen from '../loadingScreen/loadingScreen';
@@ -151,8 +151,12 @@ class NewSignUpPage extends Component {
                     .then(() => {
                     
                         this.setState({ snackbarOpen : true, SnackbarMessage : "Success!" , isLoading : false })
-                    
-                        this.props.navigation.navigate("Log In")
+                        
+                        if (this.state.snackbarOpen === false){
+                            
+                            this.props.navigation.navigate("Log In")
+                       
+                        }
 
                         var user = firebase.auth().currentUser;
 
@@ -221,7 +225,7 @@ class NewSignUpPage extends Component {
     } 
 
     // Function to close snackBar
-    snackbarClose = (event) => {
+    snackbarClose = () => {
         this.setState({
             snackbarOpen : false
         })
@@ -253,6 +257,7 @@ class NewSignUpPage extends Component {
 
             backgroundColor: "#143D59",
             border: '3px solid black'
+
         }
         const headerFontStyles = {
 
@@ -262,7 +267,9 @@ class NewSignUpPage extends Component {
 
         }
         const formContainer = {
+
             margin: "2%"
+
         }
         const textFieldContainerStyles = {
             
@@ -272,7 +279,7 @@ class NewSignUpPage extends Component {
         const buttonContainer = {
 
             marginTop: "5%",
-            marginBottom: "5%",
+            marginBottom: "0%",
             marginLeft: "30%",
             marginRight: "30%"
 
@@ -280,6 +287,7 @@ class NewSignUpPage extends Component {
         const linkContainer = {
 
             display: "flex",
+            marginTop: "0.5%",
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center"
@@ -299,6 +307,22 @@ class NewSignUpPage extends Component {
                     { isLoading ? (<LoadingScreen />) : (  
                         
                         <div style={SecContainer}>   
+
+                            <Snackbar 
+                                anchorOrigin = {{ vertical:"top" , horizontal:"center" }}
+                                open = { this.state.snackbarOpen }
+                                onClose = { this.snackbarClose }
+                                message = {this.state.SnackbarMessage}
+                                action = {[
+                                    <IconButton 
+                                        key = "close"
+                                        aria-label = "Close"
+                                        color = "inherit"
+                                        onClick = { this.snackbarClose }>
+                                            x
+                                    </IconButton>
+                                    ]}
+                            />
 
                             <div style={headerContainer}>
 
@@ -411,24 +435,7 @@ class NewSignUpPage extends Component {
                             
                             </div>
 
-                        </div>
-
-                        //     <Snackbar 
-                        //         anchorOrigin = {{vertical:"top" , horizontal:"right"}}
-                        //         open = {this.state.snackbarOpen}
-                        //         autoHideDuration = {false}
-                        //         onClose = {this.snackbarClose}
-                        //         message = {this.state.SnackbarMessage}
-                        //         action = {[
-                        //             <IconButton 
-                        //                 key = "close"
-                        //                 aria-label = "Close"
-                        //                 color = "inherit"
-                        //                 onClick = { this.snackbarClose }>
-                        //                     x
-                        //             </IconButton>
-                        //             ]}
-                        //     />
+                        </div>        
                         
                         )
                     }
