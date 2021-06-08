@@ -15,7 +15,7 @@ class NewSignUpPage extends Component {
 
         this.state = { 
             isLoading: false,
-            redirect: false,
+            redirect: false, 
 
             firstName: "", 
             lastName: "", 
@@ -24,7 +24,8 @@ class NewSignUpPage extends Component {
             confirmPassword: "",
             
             snackbarOpen: false,
-            SnackbarMessage: "" ,
+            SnackbarMessage: "",
+            emailVerificationAlert: false,
 
             fnEmptyChk: false,
             lnEmptyChk: false,
@@ -159,7 +160,7 @@ class NewSignUpPage extends Component {
                 firebase.auth().createUserWithEmailAndPassword(email, password)
                 
                     .then(() => {
-                    
+
                         this.setState({ 
                             
                             snackbarOpen : true, 
@@ -178,7 +179,9 @@ class NewSignUpPage extends Component {
 
                             confirmPassword : "",
 
-                            redirect : "true"
+                            redirect : true,
+
+                            emailVerificationAlert : true
 
                         })
 
@@ -247,21 +250,41 @@ class NewSignUpPage extends Component {
     // Function to close snackBar
     snackbarClose = () => {
 
-        if( this.state.redirect ){
-            
-            var user = firebase.auth().currentUser
+        if(this.state.snackbarOpen){
 
-            user.sendEmailVerification()
+            this.setState({
 
-            this.props.navigation.navigate("Log In")
+                snackbarOpen : false
+        
+            })
+
+            if(this.state.emailVerificationAlert){
+
+                console.log("Email Verification block")
+                var user = firebase.auth().currentUser;
+
+                user.sendEmailVerification();
+
+                this.setState({ 
+
+                    snackbarOpen : true,
+
+                    SnackbarMessage : "A verification email has been sent",
+
+                    emailVerificationAlert : false
+
+                })
+
+            }
+
+            else if(!this.state.emailVerificationAlert && this.state.redirect){
+
+                console.log("Redirection Block")
+                this.props.navigation.navigate("Log In")
+
+            }
 
         }
-
-        this.setState({
-
-            snackbarOpen : false
-        
-        })
 
     }
 

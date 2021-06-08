@@ -22,9 +22,9 @@ class NewLoginPage extends Component {
 
             isLoading : "",
 
-            snackbarOpen : true,
+            snackbarOpen : false,
 
-            SnackbarMessage : "Verify Email! An email has been sent to your e-mail address"
+            SnackbarMessage : ""
 
         };
 
@@ -66,8 +66,6 @@ class NewLoginPage extends Component {
 
     onLogin() {
 
-        console.log("Pressed Login Button");
-
         this.setState({ isLoading: true })
 
         const { email, password } = this.state;
@@ -86,27 +84,43 @@ class NewLoginPage extends Component {
     
                 })
     
-                this.props.navigation.navigate("Portfolio")
+                // this.props.navigation.navigate("Portfolio")
+                console.log("Navigate")
                 
             }else{
 
-                this.setState({ isLoading: false })
+                this.setState({ 
 
-                // Alert Mechanism
+                    isLoading : false , 
+
+                    snackbarOpen : true , 
+
+                    SnackbarMessage : "Please verify your email" ,
+
+                    password : ""
+                
+                })
+
             }
+
         })
 
         .catch((error) => {
 
             this.setState({ 
 
-                isLoading : true
+                isLoading : true ,
+
+                snackbarOpen : true ,
+
+                SnackbarMessage : error.message ,
+
+                password : ""
 
             })
 
-            // Alert
-
         })
+
     }
 
     render() {
