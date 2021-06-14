@@ -80,12 +80,11 @@ class NewLoginPage extends Component {
 
                 this.setState({ 
     
-                    isLoading : true
+                    isLoading : false
     
                 })
     
-                // this.props.navigation.navigate("Portfolio")
-                console.log("Navigate")
+                this.props.navigation.navigate("Portfolio")
                 
             }else{
 
@@ -108,8 +107,6 @@ class NewLoginPage extends Component {
         .catch((error) => {
 
             this.setState({ 
-
-                isLoading : true ,
 
                 snackbarOpen : true ,
 
@@ -251,6 +248,7 @@ class NewLoginPage extends Component {
                                         required
                                         fullWidth
                                         variant = "filled"
+                                        type = "password"
                                         placeholder = "Enter your password"
                                         label = "Password" 
                                         color = "primary"

@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import mainPage from "./Components/mainPage";
-import NewSignUpPage from './Components/AuthenticationPages/newSignUpPage';
-import NewLoginPage from "./Components/AuthenticationPages/newLoginPage";
-import ForgotPass from './Components/AuthenticationPages/ForgotPass';
-import Portfolio from './Components/AuthenticationPages/Portfolio'
+import mainPage from "../FrontEnd/Components/mainPage" 
+import NewSignUpPage from "../FrontEnd/Components/AuthenticationPages/newSignUpPage"
+import NewLoginPage from "../FrontEnd/Components/AuthenticationPages/newLoginPage";
+import ForgotPass from '../FrontEnd/Components/AuthenticationPages/ForgotPass';
+import Portfolio from '../FrontEnd/Components/AuthenticationPages/Portfolio/Portfolio'
 
 import firebase from 'firebase';
 

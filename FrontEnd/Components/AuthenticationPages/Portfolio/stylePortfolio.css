@@ -1,0 +1,95 @@
+.mainContainer{
+
+    display : flex;
+    flex-direction : column;
+    justify-content: center;
+    flex : 1;
+    
+}
+
+.appbarContents{
+
+    display : flex;
+    flex : 1;
+    justify-content : space-between;
+    align-items : center;
+    flex-direction : row;
+    flex-wrap : wrap;
+
+}
+
+.userNameStyles{
+
+    display : flex;
+    flex : 1;
+    justify-content : center;
+
+}
+
+.userIconContainer{
+
+    display : flex;
+    flex-direction : row;
+    justify-content : center;
+    align-items : center;
+    margin-right : 0.5%;
+
+}
+
+.typographyContainer{
+
+    color : white;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    flex : 1;
+
+}
+
+.logoutButtonContainer{
+
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    flex : 1;
+
+}
+
+.MiddleSectionContainer{
+
+    display : "flex";
+    flex : 1;
+    height : 100%;
+    flex-direction : column;
+    margin-left : 5%;
+    margin-right : 5%;
+    margin-top : 1%;
+    margin-bottom : 1%;
+
+}
+
+.searchBarContainer{
+
+    display : flex;
+    justify-content : flex-start;
+    padding: 1%;
+    margin: 0.5%;
+
+}
+
+.middlesSectionSecondaryContainer{
+
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+
+}
+
+.HoldingsContainer{
+
+    display : flex;
+    flex : 1;
+    flex-direction : row;
+    margin : 1%;
+
+}

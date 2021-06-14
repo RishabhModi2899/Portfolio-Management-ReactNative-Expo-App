@@ -260,7 +260,6 @@ class NewSignUpPage extends Component {
 
             if(this.state.emailVerificationAlert){
 
-                console.log("Email Verification block")
                 var user = firebase.auth().currentUser;
 
                 user.sendEmailVerification();
@@ -279,7 +278,6 @@ class NewSignUpPage extends Component {
 
             else if(!this.state.emailVerificationAlert && this.state.redirect){
 
-                console.log("Redirection Block")
                 this.props.navigation.navigate("Log In")
 
             }
