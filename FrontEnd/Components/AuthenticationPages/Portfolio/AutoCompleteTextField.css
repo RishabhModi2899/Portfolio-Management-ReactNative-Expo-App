@@ -1,0 +1,103 @@
+.AutoCompleteTextField {
+    
+    width : 100%;
+    box-shadow : 0 0 0 1px rgba(0, 0, 0, .1) , 0 2px 4px 1px rgba(0, 0, 0, .18);
+    font-family : Arial, Helvetica, sans-serif;
+    font-size : 14px;
+    color : black;
+    display : flex;
+    flex-direction : row;
+
+}
+
+.AutoCompleteTextField input {
+
+    width : 100%;
+    border : none;
+    font-family : Arial, Helvetica, sans-serif;
+    font-size : 14px;
+    color : black;
+    box-sizing : border-box;
+    outline : none;
+    padding : 10px 5px;
+
+}
+
+.AutoCompleteTextField ul {
+
+    list-style-type : none;
+    text-align : left;
+    margin : 0;
+    padding : 0;
+    border-top : 1px solid grey;
+
+}
+
+.AutoCompleteTextField ul::before {
+    
+    content : "";
+
+}
+
+.AutoCompleteTextField li {
+
+    padding : 10px 5px;
+    cursor : pointer;
+
+}
+
+.AutoCompleteTextField li:hover {
+
+    text-decoration : underline;
+    background-color : rgba(128, 128, 128, 0.20);
+
+}
+
+.AddButtonContainer {
+    
+    display : flex;
+    background-color : goldenrod;
+    flex-direction : row;
+    justify-content : flex-end;
+    align-items : center;
+    border : 1px solid black;
+
+}
+
+.SearchButtonContainer {
+
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    margin-right : 3%;
+
+}
+
+.inputSegment {
+    
+    display : flex;
+    flex-direction : column;
+    border : 2px solid black;
+    padding-top : 1%;
+    padding-bottom : 1%;
+    padding-left : 2%;
+    padding-right : 2%;
+
+}
+
+.alignmentContainer {
+
+    display : flex;
+    flex : 1;
+    justify-content : space-between;
+
+}
+
+.listNameContainer {
+
+    display : flex;
+    justify-content : flex-start;
+    align-items : center;
+
+}
+

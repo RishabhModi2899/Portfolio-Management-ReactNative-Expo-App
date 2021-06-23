@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
 
-import { AppBar, Fab, InputAdornment, Paper, Table, TableCell, TableContainer, TableHead, TextField } from "@material-ui/core"
+import { AppBar, Paper, Table, TableCell, TableContainer, TableHead } from "@material-ui/core"
 import { IconButton, Typography } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import SearchIcon from '@material-ui/icons/Search';
+
+import AutoCompleteTextField from "./AutoCompleteTextField"
+import investmentsInstruments from "../Portfolio/investmentsInstruments"
+
+import firebase from 'firebase';
 
 import './stylePortfolio.css';
 
 class Portfolio extends Component {
     
-    state = { }
+    constructor(props) {
+
+        super(props);
+
+    }
+
+    onlogOut = () => {
+
+        firebase.auth().signOut();
+
+        this.props.navigation.navigate("mainPage")
+
+    }
 
     render() {
         
@@ -45,7 +61,7 @@ class Portfolio extends Component {
 
                         <div className = "logoutButtonContainer">
 
-                            <IconButton edge = "start" color = "inherit" aria-label = "Logout Buttom" >
+                            <IconButton edge = "start" color = "inherit" aria-label = "Logout Buttom" onClick = { this.onlogOut }>
 
                                 <ExitToAppIcon fontSize = "large"/>
 
@@ -65,27 +81,10 @@ class Portfolio extends Component {
                     <div className = "middlesSectionSecondaryContainer">
 
                         <div className = "searchBarContainer">
-
-                            <TextField 
-                            
-                                placeholder = "Search for stocks"
-                                InputProps = {{
-
-                                    startAdornment : (
-                                        <InputAdornment position = "start">
-
-                                            <SearchIcon fontSize = "large"/>
-
-                                        </InputAdornment>
-
-                                    )
-
-                                }}
-
-                            />
+                                
+                                <AutoCompleteTextField items = { investmentsInstruments }/>
 
                         </div>
-
                         
                         <div className = "HoldingsContainer">
 
@@ -97,6 +96,7 @@ class Portfolio extends Component {
 
                                         <TableCell>  Stock Name  </TableCell>
                                         <TableCell align = "right">  Quantity  </TableCell>
+                                        <TableCell align = "right">  LTP  </TableCell>
                                         <TableCell align = "right">  Unrealized (P&L)  </TableCell>
                                         <TableCell align = "right">  Percentage Return  </TableCell>
 

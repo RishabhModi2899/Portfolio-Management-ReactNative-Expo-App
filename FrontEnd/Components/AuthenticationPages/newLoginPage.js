@@ -86,7 +86,7 @@ class NewLoginPage extends Component {
     
                 this.props.navigation.navigate("Portfolio")
                 
-            }else{
+            } else{
 
                 this.setState({ 
 
@@ -107,6 +107,8 @@ class NewLoginPage extends Component {
         .catch((error) => {
 
             this.setState({ 
+
+                isLoading : false,
 
                 snackbarOpen : true ,
 
@@ -279,6 +281,26 @@ class NewLoginPage extends Component {
                                     <h3 style = { linkTextStyles }>
                                                 
                                         Sign Up here
+                                            
+                                    </h3>
+
+                                </TouchableOpacity>
+
+                            </div>
+
+                            <div style = { linkContainer }>
+
+                                <h3>
+                                            
+                                    Forgot Your Password?
+                                        
+                                </h3>
+
+                                <TouchableOpacity onPress = {() => { this.props.navigation.navigate("Forgot Password") }}>
+
+                                    <h3 style = { linkTextStyles }>
+                                                
+                                        Reset password
                                             
                                     </h3>
 

@@ -1,0 +1,61 @@
+.forgetPassMainContainer {
+
+    background-color : #2a2a2a;
+    display : flex;
+    flex : 1;
+    flex-direction : column;
+
+}
+
+.subContainer {
+
+    background-color : #F4B41A;
+    display : flex;
+    flex-direction : column;
+    flex : 1;
+    margin-left : 15%;
+    margin-right : 15%;
+
+}
+
+.headingContainer {
+
+    background-color : #143D59;
+    text-align : center;
+    color : white;
+
+}
+
+.textfieldContainer {
+
+    margin-top : 15%;
+    margin-bottom : 5%;
+    margin-left : 5%;
+    margin-right : 5%;
+
+}
+
+.buttonContainer {
+
+    margin-top : 10%;
+    margin-bottom : 5%;
+    margin-left : 30%;
+    margin-right : 30%;
+
+}
+
+.linkContainer {
+
+    display : flex;
+    margin-top : 0.5%;
+    flex-direction : row;
+    justify-content : center;
+    align-items : center;
+
+}
+
+.linkTextStyles {
+
+    color : blue;
+
+} 

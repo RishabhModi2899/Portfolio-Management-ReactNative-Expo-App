@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import mainPage from "../FrontEnd/Components/mainPage" 
 import NewSignUpPage from "../FrontEnd/Components/AuthenticationPages/newSignUpPage"
 import NewLoginPage from "../FrontEnd/Components/AuthenticationPages/newLoginPage";
-import ForgotPass from '../FrontEnd/Components/AuthenticationPages/ForgotPass';
+import NewForgotPass from "./Components/AuthenticationPages/ForgotPassword/NewForgotPass";
 import Portfolio from '../FrontEnd/Components/AuthenticationPages/Portfolio/Portfolio'
 
 import firebase from 'firebase';
@@ -59,7 +59,7 @@ class App extends Component {
           />
           <Stack.Screen
             name="Forgot Password"
-            component={ForgotPass}
+            component={NewForgotPass}
             options={{
               headerShown: false,
             }}
