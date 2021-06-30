@@ -205,7 +205,7 @@ class NewLoginPage extends Component {
                             anchorOrigin = {{ vertical:"top" , horizontal:"center" }}
                             open = { this.state.snackbarOpen }
                             onClose = { this.snackbarClose }
-                            message = {this.state.SnackbarMessage}
+                            message = { this.state.SnackbarMessage }
                             action = {[
 
                                 <IconButton 

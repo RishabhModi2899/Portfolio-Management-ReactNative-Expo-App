@@ -18,6 +18,8 @@
     "expo": "~41.0.1",
     "expo-status-bar": "~1.0.4",
     "firebase": "8.2.3",
+    "firebase-admin": "^9.10.0",
+    "material-table": "^1.69.3",
     "react": "16.13.1",
     "react-alert": "^7.0.3",
     "react-alert-template-basic": "^1.0.2",

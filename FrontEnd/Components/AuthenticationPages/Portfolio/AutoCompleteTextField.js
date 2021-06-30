@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
-import { IconButton } from '@material-ui/core';
+import { IconButton, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
-
-import StockDialog from "./StockDialog"
+import { Snackbar, Dialog, TextField, Button, DialogTitle, DialogContent } from '@material-ui/core';
 
 import "./AutoCompleteTextField.css"
+import "./StockDialog.css"
+
+import firebase from "firebase"
 
 class AutoCompleteTextField extends Component {
     
@@ -18,16 +20,25 @@ class AutoCompleteTextField extends Component {
 
             suggestions : [],
 
+            setStockDialog : false, // Stock dialog box state variable
+            
+            // State variables for stock Information  
             text : '',
+            
+            StockQuantity : '',
 
-            stockInfoDialogOpen : false
+            StockBuyPrice : '',
+
+            // Snackbar state variables
+            SnackbarOpen : false,
+
+            SnackbarMessage : ''
 
         };
 
         this.suggestionSelected = this.suggestionSelected.bind(this);
         this.renderSuggestions = this.renderSuggestions.bind(this);
         this.AddButtonPressEvent = this.AddButtonPressEvent.bind(this);
-        this.StockInfoDialogClose = this.StockInfoDialogClose.bind(this);
 
     }
 
@@ -50,6 +61,54 @@ class AutoCompleteTextField extends Component {
         this.setState(() => ({ suggestions , text : value }))
 
     } 
+    
+    // Function to close snackbar 
+    snackbarClose = () => {
+
+        this.setState({  
+
+            SnackbarOpen : false
+
+        })
+
+    } 
+    
+    // To close the stock dialog box
+    onCloseEvent = () => {
+
+        this.setState({
+
+            setStockDialog : false,
+
+            StockBuyPrice : '',
+
+            StockQuantity : ''
+
+        })
+
+    }
+    
+    // Function to handle the quantity Input 
+    handleStockQuantity = (e) => {
+
+        this.setState({
+
+            StockQuantity : e.target.value
+
+        })
+
+    }
+
+    // Function to handle the buy average price
+    handleStockBuyPrice = (e) => {
+
+        this.setState({
+
+            StockBuyPrice : e.target.value
+
+        })
+
+    }
 
     suggestionSelected(value) {
 
@@ -63,25 +122,12 @@ class AutoCompleteTextField extends Component {
 
     }
 
+    // To open the stock dialog box 
     AddButtonPressEvent() {
-
-        console.log("Add Button Pressed") // Working Properly
 
         this.setState({  
 
-            stockInfoDialogOpen : true
-
-        })
-
-    }
-
-    StockInfoDialogClose() {
-
-        this.setState({
-
-            stockInfoDialogOpen : false,
-
-            text : ''
+            setStockDialog : true
 
         })
 
@@ -130,6 +176,72 @@ class AutoCompleteTextField extends Component {
 
     }  
 
+    saveEventHandler = () => {
+
+        console.log("Pressed Save Button")
+
+        var user = firebase.auth().currentUser;
+
+        var user_uid = user.uid;
+
+        if( this.state.StockQuantity.length === 0 || this.state.StockBuyPrice.length === 0 ) {
+
+            this.setState({  
+
+                SnackbarOpen : true,
+
+                SnackbarMessage : "Please Enter the values in the requiered fields"
+
+            })
+
+        } else {
+
+            // Success and store values in the database             
+
+            const STOCK_NAME_DB = this.state.text
+            const STOCK_QTY_DB = this.state.StockQuantity
+            const STOCK_BUY_VALUE_DB = this.state.StockBuyPrice
+
+            firebase.firestore().collection('USER_PORTFOLIO').add({
+
+                    UID : user_uid,
+                    STOCK_INFORMATION : {
+                        STOCK_NAME : STOCK_NAME_DB,
+                        STOCK_QUANTITY : STOCK_QTY_DB,
+                        STOCK_BUY_AVERAGE : STOCK_BUY_VALUE_DB
+                    }
+                
+            })
+                
+            .then(() => {
+
+                this.setState({ 
+
+                    setStockDialog : false,
+
+                    SnackbarOpen : true,
+
+                    SnackbarMessage : "Added Successfully"
+
+                })
+
+            })
+            .catch(error => {
+
+                this.setState({  
+
+                    SnackbarOpen : true,
+
+                    SnackbarMessage : error.message
+
+                })
+
+            })
+
+        }
+
+    }
+
     render() {
 
         const { text } = this.state;
@@ -138,11 +250,96 @@ class AutoCompleteTextField extends Component {
 
             <div className = "AutoCompleteTextField">
 
-                <StockDialog  
-                    open = { this.state.stockInfoDialogOpen } 
-                    onClose = { this.StockInfoDialogClose }
-                    companyName = { text } />
+                <Snackbar 
+                    anchorOrigin = {{ vertical:"top" , horizontal:"center" }}
+                    open = { this.state.SnackbarOpen }
+                    onClose = { this.snackbarClose }
+                    message = { this.state.SnackbarMessage }
+                    action = {[
 
+                        <IconButton 
+                            key = "close" 
+                            color = "inherit" 
+                            arial-label = "Close" 
+                            onClick = { this.snackbarClose }>
+                            X
+                        </IconButton>
+                        
+                    ]}
+
+                />
+
+                <Dialog 
+                    open = { this.state.setStockDialog } 
+                    onClose = { this.onCloseEvent } 
+                    fullWidth
+                    maxWidth = "md" > 
+
+                    <DialogTitle onClose = { this.onCloseEvent }>
+                    
+                        <div className = "headingDialogBox">
+
+                            <Typography variant = "h6">
+
+                                BUY { text }
+
+                            </Typography>
+
+                        </div>
+
+                    </DialogTitle>
+
+                    <DialogContent dividers>
+
+                        <div className = "DialogBoxTextField">
+                        
+                            <TextField 
+                            fullWidth
+                            type = "number"
+                            placeholder = "Enter the quantity"
+                            label = "Quantity"
+                            value = { this.state.StockQuantity }
+                            onChange = { this.handleStockQuantity }
+                            variant = "filled"
+                            requiered
+                            />
+                        
+                        </div>
+
+                        <div className = "DialogBoxTextField">
+
+                            <TextField 
+                            fullWidth
+                            type = "number"
+                            placeholder = "Enter the Average buying Price"
+                            label = "Average Buying Price"
+                            value = { this.state.StockBuyPrice }
+                            onChange = { this.handleStockBuyPrice }
+                            variant = "filled"
+                            requiered 
+                            />
+
+                        </div>
+
+                        <div className = "ButtonsContainer">
+                            
+                            <div className = "buttonWrapper"> 
+                        
+                            <Button onClick = { this.saveEventHandler } variant = "outlined" color = "primary"> SAVE </Button> 
+                        
+                            </div>
+
+                            <div className = "buttonWrapper">
+                                
+                                <Button onClick = { this.onCloseEvent } variant = "outlined" color = "secondary"> CLOSE </Button>
+
+                            </div>
+                        
+                        </div>
+
+                    </DialogContent>
+                
+                </Dialog>
 
                 <div className = "inputSegment">
 

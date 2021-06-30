@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { AppBar, Paper, Table, TableCell, TableContainer, TableHead } from "@material-ui/core"
+import { AppBar } from "@material-ui/core"
 import { IconButton, Typography } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -9,6 +9,8 @@ import AutoCompleteTextField from "./AutoCompleteTextField"
 import investmentsInstruments from "../Portfolio/investmentsInstruments"
 
 import firebase from 'firebase';
+
+import HoldingsTable from "./HoldingsTable"
 
 import './stylePortfolio.css';
 
@@ -53,7 +55,7 @@ class Portfolio extends Component {
 
                             <Typography variant = "h6">
 
-                                Holdings
+                                PORTFOLIO
 
                             </Typography>
 
@@ -85,27 +87,11 @@ class Portfolio extends Component {
                                 <AutoCompleteTextField items = { investmentsInstruments }/>
 
                         </div>
-                        
+
                         <div className = "HoldingsContainer">
 
-                            <TableContainer component = {Paper}>
+                            <HoldingsTable />
 
-                                <Table>
-
-                                    <TableHead>
-
-                                        <TableCell>  Stock Name  </TableCell>
-                                        <TableCell align = "right">  Quantity  </TableCell>
-                                        <TableCell align = "right">  LTP  </TableCell>
-                                        <TableCell align = "right">  Unrealized (P&L)  </TableCell>
-                                        <TableCell align = "right">  Percentage Return  </TableCell>
-
-                                    </TableHead>
-
-                                </Table>
-
-                            </TableContainer>
-                                
                         </div>
 
                     </div>
