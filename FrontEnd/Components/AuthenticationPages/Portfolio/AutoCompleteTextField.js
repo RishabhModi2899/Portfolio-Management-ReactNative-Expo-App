@@ -158,7 +158,11 @@ class AutoCompleteTextField extends Component {
                                 
                                     <div className = "AddButtonContainer"> 
                                     
-                                        <IconButton edge = 'center' onClick = { () => this.AddButtonPressEvent() }> <AddIcon fontSize = "small"/> </IconButton>
+                                        <IconButton size = "small" color = "default" edge = 'center' onClick = { () => this.AddButtonPressEvent() }> 
+                                        
+                                            <AddIcon fontSize = "medium"/> 
+                                            
+                                        </IconButton>
                                     
                                     </div>
 
@@ -177,8 +181,6 @@ class AutoCompleteTextField extends Component {
     }  
 
     saveEventHandler = () => {
-
-        console.log("Pressed Save Button")
 
         var user = firebase.auth().currentUser;
 
@@ -214,14 +216,18 @@ class AutoCompleteTextField extends Component {
             })
                 
             .then(() => {
-
+               
                 this.setState({ 
 
                     setStockDialog : false,
 
                     SnackbarOpen : true,
 
-                    SnackbarMessage : "Added Successfully"
+                    SnackbarMessage : "Added Successfully",
+
+                    StockQuantity : "",
+
+                    StockBuyPrice : ""
 
                 })
 
@@ -243,13 +249,13 @@ class AutoCompleteTextField extends Component {
     }
 
     render() {
-
+        
         const { text } = this.state;
-
+        
         return (
-
+            
             <div className = "AutoCompleteTextField">
-
+ 
                 <Snackbar 
                     anchorOrigin = {{ vertical:"top" , horizontal:"center" }}
                     open = { this.state.SnackbarOpen }
@@ -325,7 +331,7 @@ class AutoCompleteTextField extends Component {
                             
                             <div className = "buttonWrapper"> 
                         
-                            <Button onClick = { this.saveEventHandler } variant = "outlined" color = "primary"> SAVE </Button> 
+                                <Button onClick = { this.saveEventHandler } variant = "outlined" color = "primary"> SAVE </Button> 
                         
                             </div>
 

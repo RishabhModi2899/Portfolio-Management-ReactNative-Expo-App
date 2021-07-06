@@ -8,6 +8,7 @@ import NewSignUpPage from "../FrontEnd/Components/AuthenticationPages/newSignUpP
 import NewLoginPage from "../FrontEnd/Components/AuthenticationPages/newLoginPage";
 import NewForgotPass from "./Components/AuthenticationPages/ForgotPassword/NewForgotPass";
 import Portfolio from '../FrontEnd/Components/AuthenticationPages/Portfolio/Portfolio'
+import RealisedPL from '../FrontEnd/Components/AuthenticationPages/Portfolio/RealisedPL'
 
 import firebase from 'firebase';
 
@@ -69,6 +70,12 @@ class App extends Component {
           component={Portfolio}
           options={{
             headerShown: false,
+          }}/>
+          <Stack.Screen
+          name = "RealisedPL"
+          component = { RealisedPL }
+          options = {{
+            headerShown : false
           }}/>
         </Stack.Navigator>
       </NavigationContainer>

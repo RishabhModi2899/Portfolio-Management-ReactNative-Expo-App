@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-import { AppBar } from "@material-ui/core"
+import { AppBar , Menu , MenuItem , MenuList } from "@material-ui/core"
 import { IconButton, Typography } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 
 import AutoCompleteTextField from "./AutoCompleteTextField"
 import investmentsInstruments from "../Portfolio/investmentsInstruments"
@@ -20,6 +20,8 @@ class Portfolio extends Component {
 
         super(props);
 
+        this.state = { anchorEl : null }
+
     }
 
     onlogOut = () => {
@@ -30,12 +32,50 @@ class Portfolio extends Component {
 
     }
 
+    handleMenuOpen = (event) => {
+
+        this.setState({
+
+            anchorEl : event.currentTarget
+
+        })
+
+    }
+
+    handleMenuClose = () => {
+
+        this.setState({
+
+            anchorEl : null
+
+        })
+
+    }
+
+    redirectToRealisedPL = () => {
+        
+        this.props.navigation.navigate("RealisedPL")
+        this.handleMenuClose()
+
+    }
+
     render() {
         
         return (
                    
             <div className = "mainContainer">
+
+                {/* Menu for Menu button  */}
+                <Menu id = 'simpleMenu' anchorEl = { this.state.anchorEl } keepMounted open = { Boolean(this.state.anchorEl) } onClose = { this.handleMenuClose }>
+
+                    <MenuList>
+                    
+                        <MenuItem onClick = { this.redirectToRealisedPL }> View Realised P&L </MenuItem>
+                    
+                    </MenuList>
                 
+                </Menu>
+
                 {/* AppBar Container */}
                 <AppBar position = "static">
 
@@ -45,7 +85,11 @@ class Portfolio extends Component {
 
                             <div className = "userIconContainer">
                                 
-                                <AccountCircleIcon fontSize = "large"/>
+                                <IconButton onClick = { this.handleMenuOpen } color = 'inherit'>
+
+                                    <MenuRoundedIcon fontSize = "large"/>
+                                
+                                </IconButton>
 
                             </div>
 
